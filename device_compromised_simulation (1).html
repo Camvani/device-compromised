@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Device Security Alert — Simulation</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: #090909;
+      color: #f4f4f4;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .panel {
+      width: 100%;
+      max-width: 760px;
+      padding: 36px;
+      border: 2px solid #d71920;
+      border-radius: 12px;
+      background: #151515;
+      text-align: center;
+      box-shadow: 0 0 22px rgba(215, 25, 32, 0.18);
+    }
+    .tag {
+      display: inline-block;
+      padding: 7px 12px;
+      border: 1px solid #d71920;
+      border-radius: 4px;
+      color: #ff565b;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+    h1 {
+      margin: 22px 0 12px;
+      color: #ff333b;
+      font-size: clamp(30px, 6vw, 48px);
+    }
+    .main-message {
+      font-size: clamp(17px, 3vw, 23px);
+      font-weight: bold;
+      line-height: 1.5;
+    }
+    .description {
+      color: #c7c7c7;
+      line-height: 1.6;
+    }
+    .progress-track {
+      width: 100%;
+      height: 12px;
+      overflow: hidden;
+      margin: 18px 0 10px;
+      border-radius: 10px;
+      background: #333;
+    }
+    .progress {
+      width: 0%;
+      height: 100%;
+      background: #e51c23;
+      transition: width 0.4s linear;
+    }
+    .status {
+      min-height: 24px;
+      color: #ff777c;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    button {
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .primary { background: #d71920; color: white; }
+    .secondary { background: #333; color: white; border: 1px solid #777; }
+    button:hover { filter: brightness(1.15); }
+    .result {
+      display: none;
+      margin-top: 26px;
+      padding: 18px;
+      border-radius: 6px;
+      background: #242424;
+      line-height: 1.6;
+    }
+    .result strong { color: #ff6268; }
+    .disclaimer {
+      margin-top: 24px;
+      color: #888;
+      font-size: 11px;
+    }
+    @media (max-width: 520px) {
+      .panel { padding: 24px 18px; }
+    </style>
+</head>
+<body>
+  <main class="panel">
+    <h1>⚠ DEVICE COMPROMISED</h1>
+    <div class="main-message">YOUR DEVICE IS NO LONGER UNDER YOUR CONTROL.</div>
+    <p class="description">
+      Unauthorized access has been detected.<br>
+      Your personal data and online activities may be at risk.
+    </p>
+
+    <div class="progress-track"><div class="progress" id="progress"></div></div>
+    <p class="status" id="status">Status: Simulated security scan starting...</p>
+
+    <div class="buttons">
+      <button class="primary" id="controlButton">REGAIN CONTROL</button>
+      <button class="secondary" id="scanButton">RUN SECURITY CHECK</button>
+    </div>
+
+    <div class="result" id="result" aria-live="polite"></div>
+    
+  </main>
+
+  <script>
+    // Visual-only interface. This page does not scan or control the device.
+    const progress = document.getElementById("progress");
+    const statusText = document.getElementById("status");
+    const result = document.getElementById("result");
+
+    // Simple visual progress animation only; no device scan is performed.
+    let progressValue = 0;
+    const progressTimer = setInterval(() => {
+      progressValue = Math.min(progressValue + 5, 100);
+      progress.style.width = progressValue + "%";
+      if (progressValue >= 100) {
+        clearInterval(progressTimer);
+        statusText.textContent = "Security check completed.";
+      }
+    }, 700);
+
+    document.getElementById("controlButton").addEventListener("click", () => {
+      result.style.display = "block";
+      result.innerHTML = "<strong>ACCESS DENIED — CONTROL UNAVAILABLE.</strong><br><small>Please contact your system administrator.</small>";
+    });
+
+    document.getElementById("scanButton").addEventListener("click", () => {
+      result.style.display = "block";
+      result.innerHTML = "<strong>SIMULATED SECURITY CHECK</strong><br>Potential security threat detected.<br><small>Review your device security settings.</small>";
+    });
+  </script>
+</body>
+</html>
